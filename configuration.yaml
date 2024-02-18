@@ -1,0 +1,141 @@
+switch:
+  - platform: rest
+    name: "ThermWet Manual Mode"
+    icon: mdi:refresh-auto
+    resource: http://192.168.1.88/sendIndex?BtInfo=3 #GET
+    state_resource: http://192.168.1.88/readDataIndex
+    unique_id: thermwet_mode
+    is_on_template: '{{ value_json.wAM == "1" }}'
+
+  - platform: rest
+    name: "ThermWet Power"
+    icon: mdi:power
+    resource: http://192.168.1.88/sendIndex?BtInfo=2
+    state_resource: http://192.168.1.88/readDataIndex
+    unique_id: thermwet_power_state
+    is_on_template: '{{ value_json.wPWR == "1" }}'
+
+  - platform: rest
+    name: "ThermWet Bypass"
+    icon: mdi:debug-step-over
+    resource: http://192.168.1.88/sendIndex?BtInfo=1
+    state_resource: http://192.168.1.88/readDataIndex
+    unique_id: thermwet_bypass
+    is_on_template: '{{ value_json.wwwbyp == "1" }}'
+
+  - platform: rest
+    name: "ThermWet Boost"
+    icon: mdi:fan-clock
+    resource: http://192.168.1.88/sendIndex?BtInfo=6
+    state_resource: http://192.168.1.88/readDataIndex
+    unique_id: thermwet_boost
+    is_on_template: '{{ value_json.wInt == "1" }}'
+
+  - platform: rest
+    name: "ThermWet Dovolená"
+    icon: mdi:plane-car
+    resource: http://192.168.1.88/sendIndex?BtInfo=5
+    state_resource: http://192.168.1.88/readDataIndex
+    unique_id: thermwet_dovolena
+    is_on_template: '{{ value_json.wDov == "1" }}'
+
+
+
+sensor:
+  - platform: rest
+    method: GET
+    name: "ThermWet Speed"
+    icon: mdi:fan
+    resource: http://192.168.1.88/readDataIndex
+    unique_id: thermwet_speed
+    value_template: "{{ value_json.wGrafH }}"
+    unit_of_measurement: "m3/h"
+
+  - platform: rest
+    method: GET
+    name: "ThermWet Error"
+    icon: mdi:math-log
+    resource: http://192.168.1.88/readDataInfolog
+    unique_id: thermwet_error
+    value_template: "{{ value_json.wActErr }}"
+
+  - platform: rest
+    method: GET
+    name: "ThermWet Příkon"
+    icon: mdi:lightning-bolt
+    resource: http://192.168.1.88/readDataInfoeng
+    unique_id: thermwet_prikon
+    value_template: "{{ value_json.wPrikon }}"
+    unit_of_measurement: "W"
+
+  - platform: rest
+    method: GET
+    name: "ThermWet Teplota Exteriér"
+    icon: mdi:cloud-arrow-right-outline
+    resource: http://192.168.1.88/readDataInfo
+    unique_id: thermwet_te1
+    value_template: "{{ value_json.wTe1 }}"
+    unit_of_measurement: "°C"
+
+  - platform: rest
+    method: GET
+    name: "ThermWet Teplota za Předehřevem"
+    icon: mdi:radiator
+    resource: http://192.168.1.88/readDataInfo
+    unique_id: thermwet_te1p
+    value_template: "{{ value_json.wTe1p }}"
+    unit_of_measurement: "°C"
+
+  - platform: rest
+    method: GET
+    name: "ThermWet Teplota Dovnitř"
+    icon: mdi:home-import-outline
+    resource: http://192.168.1.88/readDataInfo
+    unique_id: thermwet_te2
+    value_template: "{{ value_json.wTe2 }}"
+    unit_of_measurement: "°C"
+
+  - platform: rest
+    method: GET
+    name: "ThermWet Teplota Odtah"
+    icon: mdi:home-export-outline
+    resource: http://192.168.1.88/readDataInfo
+    unique_id: thermwet_ti1
+    value_template: "{{ value_json.wTi1 }}"
+    unit_of_measurement: "°C"
+
+  - platform: rest
+    method: GET
+    name: "ThermWet Teplota Odpad"
+    icon: mdi:cloud-arrow-left-outline
+    resource: http://192.168.1.88/readDataInfo
+    unique_id: thermwet_ti2
+    value_template: "{{ value_json.wTi2 }}"
+    unit_of_measurement: "°C"
+
+  - platform: rest
+    method: GET
+    name: "ThermWet Předehřev"
+    icon: mdi:radiator
+    resource: http://192.168.1.88/readDataInfo
+    unique_id: thermwet_predehrev
+    value_template: "{{ value_json.wProcPred }}"
+    unit_of_measurement: "%"
+
+  - platform: rest
+    method: GET
+    name: "ThermWet Účinnost"
+    icon: mdi:cloud-percent-outline
+    resource: http://192.168.1.88/readDataInfo
+    unique_id: thermwet_ucinnost
+    value_template: "{{ value_json.wUcinnost }}"
+    unit_of_measurement: "%"
+
+  - platform: rest
+    method: GET
+    name: "ThermWet Opotřebení filtrů"
+    icon: mdi:air-filter
+    resource: http://192.168.1.88/readDataInfo
+    unique_id: thermwet_filtr
+    value_template: "{{ value_json.wFiltr }}"
+    unit_of_measurement: "%"
